@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b1110">
+    <title>smol-glm-5.2 training desk</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1110'/%3E%3Cpath d='M15 43V21h8l9 12 9-12h8v22h-8V32l-9 11-9-11v11z' fill='%23d6ff5f'/%3E%3C/svg%3E"
+    >
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="signal-rail" aria-hidden="true"></div>
+    <main>
+      <header class="masthead">
+        <div class="identity">
+          <p class="eyebrow">LOCAL GPU / TINYSTORIES / INDEXSHARE</p>
+          <h1>smol-glm-5.2<br><em>training desk</em></h1>
+        </div>
+        <div class="run-state">
+          <div class="status-line">
+            <span id="status-dot" class="status-dot"></span>
+            <span id="status">waiting</span>
+          </div>
+          <p id="updated">not connected</p>
+        </div>
+      </header>
+
+      <section class="progress-block" aria-label="Training progress">
+        <div class="progress-copy">
+          <span>run progress</span>
+          <strong id="progress-label">0.0%</strong>
+        </div>
+        <div class="progress-track">
+          <span id="progress-bar"></span>
+        </div>
+      </section>
+
+      <section class="readout primary-readout" aria-label="Latest training metrics">
+        <div>
+          <span>optimizer step</span>
+          <strong id="step">—</strong>
+        </div>
+        <div>
+          <span>total objective</span>
+          <strong id="train-loss">—</strong>
+        </div>
+        <div>
+          <span>next-token loss</span>
+          <strong id="main-loss">—</strong>
+        </div>
+        <div>
+          <span>validation</span>
+          <strong id="val-loss">—</strong>
+        </div>
+        <div>
+          <span>tokens / sec</span>
+          <strong id="throughput">—</strong>
+        </div>
+        <div>
+          <span>peak VRAM</span>
+          <strong id="vram">—</strong>
+        </div>
+      </section>
+
+      <section class="workbench">
+        <article class="plot-section">
+          <div class="section-heading">
+            <div>
+              <p class="section-index">01 / LOSS TRACE</p>
+              <h2>Language acquisition</h2>
+            </div>
+            <span id="tokens-seen">0 tokens seen</span>
+          </div>
+          <div class="plot-frame">
+            <div id="plot-placeholder" class="plot-placeholder">
+              <span>Awaiting the first optimizer step</span>
+            </div>
+            <img
+              id="loss-plot"
+              alt="Training objective, next-token, and validation loss chart"
+              hidden
+            >
+          </div>
+        </article>
+
+        <aside class="telemetry">
+          <div class="section-heading">
+            <div>
+              <p class="section-index">02 / AUXILIARY SIGNALS</p>
+              <h2>Architecture pulse</h2>
+            </div>
+          </div>
+          <dl>
+            <div>
+              <dt>MTP loss</dt>
+              <dd id="mtp-loss">—</dd>
+            </div>
+            <div>
+              <dt>Indexer distill</dt>
+              <dd id="indexer-loss">—</dd>
+            </div>
+            <div>
+              <dt>Gradient norm</dt>
+              <dd id="grad-norm">—</dd>
+            </div>
+            <div>
+              <dt>Learning rate</dt>
+              <dd id="lr-scale">—</dd>
+            </div>
+            <div>
+              <dt>Elapsed</dt>
+              <dd id="elapsed">—</dd>
+            </div>
+            <div>
+              <dt>ETA</dt>
+              <dd id="eta">—</dd>
+            </div>
+          </dl>
+          <div class="model-card">
+            <span id="parameter-count">50.15M total</span>
+            <p id="architecture">
+              13 layers · MLA + DSA · IndexShare · MoE · shared MTP
+            </p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="sample-section">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">03 / LIVE DECODE</p>
+            <h2>Latest TinyStory sample</h2>
+          </div>
+          <span id="sample-step">not generated</span>
+        </div>
+        <p id="sample-prompt" class="prompt"></p>
+        <pre id="sample">A cached autoregressive sample will appear after the first inference interval.</pre>
+      </section>
+
+      <p id="message" class="message" role="status"></p>
+      <footer>
+        <span>GLM-5.2 architecture study</span>
+        <span>polling every 2 seconds</span>
+      </footer>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>
