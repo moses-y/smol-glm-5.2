@@ -12,7 +12,7 @@
 
 **MLA · DSA · Lightning Indexer · IndexShare · Sparse MoE · Shared MTP · Muon Split**
 
-[Quick start](#quick-start) · [Architecture](#architecture) · [Dashboard](#live-training-dashboard) · [Model card](#model-card) · [Verification](#verification)
+[Quick start](#quick-start) · [Architecture](#architecture) · [Download](#download-the-trained-model) · [Dashboard](#live-training-dashboard) · [Verification](#verification)
 
 </div>
 
@@ -458,8 +458,56 @@ python3 generate.py release/smol-glm-5.2-tinystories/model.safetensors \
   --prompt "Once upon a time"
 ```
 
-No pretrained weights are committed to this repository. `checkpoints/`,
-`release/`, and prepared binary data are ignored by Git.
+No pretrained weights are committed to this repository. The official bundle
+is published separately in the GitHub Release below; `checkpoints/`,
+`release/`, and prepared binary data remain ignored by Git.
+
+## Download the trained model
+
+The best checkpoint from the completed 10,000-step TinyStories run is
+published in the
+[`v0.1.0-tinystories` GitHub Release](https://github.com/cneuralnetwork/smol-glm-5.2/releases/tag/v0.1.0-tinystories).
+It contains BF16 SafeTensors inference weights without optimizer state.
+
+```bash
+mkdir -p pretrained/smol-glm-5.2
+
+gh release download v0.1.0-tinystories \
+  --repo cneuralnetwork/smol-glm-5.2 \
+  --dir pretrained/smol-glm-5.2
+
+python3 generate.py pretrained/smol-glm-5.2/model.safetensors \
+  --prompt "Once upon a time, a little fox"
+```
+
+Published bundle:
+
+| File | Purpose |
+|---|---|
+| `model.safetensors` | 50.15M-parameter BF16 inference weights |
+| `config.json` | exact architecture configuration |
+| `tokenizer.json` | 8,192-token TinyStories BPE tokenizer |
+| `training_metadata.json` | selected checkpoint, run settings, and final dashboard state |
+| `sha256sums.txt` | integrity checksums for every bundle artifact |
+
+### Completed training result
+
+| Metric | Result |
+|---|---:|
+| Optimizer steps | **10,000** |
+| Selected checkpoint | **step 9,750** |
+| Best validation loss | **1.6653** |
+| Final validation loss | **1.6774** |
+| Final next-token train loss | **1.5918** |
+| Final measured throughput | **8,199 tokens/s** |
+| Peak allocated VRAM | **3.86 GiB** |
+| Training hardware | **RTX 4060 Laptop GPU, 8 GB** |
+
+Example from the exported model:
+
+> Once upon a time, a little fox was walking in the woods when he stumbled on
+> a piece of cardboard. He was very sad because he could not find any friends.
+> He looked around, but the cardboard wasn't there.
 
 ## Live training dashboard
 
